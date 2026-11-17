@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paul Ablaza — Student & Builder</title>
+<meta name="description" content="Portfolio mock-up for Paul Ablaza — a student designing and building simple digital things.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.92em' font-size='88'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+/* ---------- tokens ---------- */
+:root{
+  --bg:#e9e9e7;
+  --card:#fff;
+  --ink:#0c0c0c;
+  --muted:#6f6f6c;
+  --faint:#6b6b68;
+  --line:rgba(12,12,12,.09);
+  --ease:cubic-bezier(.16,1,.3,1);
+  --radius:32px;
+}
+
+/* ---------- base ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:16px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+body::after{ /* very light paper grain */
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.028;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,p,ul{margin:0}
+ul{list-style:none;padding:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:8px}
+::selection{background:var(--ink);color:#fff}
+
+/* ---------- scroll progress ---------- */
+.progress{
+  position:fixed;top:0;left:0;height:2px;width:0;z-index:70;
+  background:var(--ink);transform-origin:0 50%;
+}
+
+/* ---------- shell ---------- */
+.shell{
+  max-width:1200px;margin:0 auto;
+  padding:clamp(14px,2vw,28px) clamp(14px,2.4vw,24px) 72px;
+  display:flex;flex-direction:column;gap:clamp(12px,1.6vw,18px);
+}
+.card{
+  position:relative;overflow:hidden;
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:0 1px 2px rgba(16,16,16,.04),0 30px 70px -32px rgba(16,16,16,.16);
+}
+section{scroll-margin-top:24px}
+
+/* ---------- nav ---------- */
+.nav{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:clamp(20px,3.4vw,32px) clamp(20px,4.4vw,52px) 0;
+  font-size:12.5px;
+}
+.nav__left{display:flex;align-items:center;gap:8px;min-width:0}
+.mail{
+  font-size:12.5px;font-weight:500;letter-spacing:-.01em;
+  color:#3d3d3b;opacity:.85;transition:opacity .3s ease;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.mail:hover{opacity:1;text-decoration:underline;text-underline-offset:3px}
+.chip{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:7px 12px;border-radius:999px;
+  background:#fff;border:1px solid rgba(12,12,12,.08);
+  box-shadow:0 1px 2px rgba(12,12,12,.05);
+  font-size:11.5px;font-weight:500;color:#3d3d3b;
+  cursor:pointer;white-space:nowrap;
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease),background .3s ease;
+}
+.chip:hover{transform:translateY(-1px);box-shadow:0 5px 14px -6px rgba(12,12,12,.28)}
+.chip:active{transform:translateY(0) scale(.985)}
+.chip svg{width:12px;height:12px;opacity:.6}
+.chip.is-copied{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip.is-copied svg{opacity:1}
+.nav__right{display:flex;align-items:center;gap:clamp(14px,2vw,22px);font-size:12.5px}
+.nav__right a{color:#4a4a47;position:relative;transition:color .3s ease}
+.nav__right a::after{
+  content:"";position:absolute;left:0;right:0;bottom:-3px;height:1px;
+  background:currentColor;transform:scaleX(0);transform-origin:0 50%;
+  transition:transform .45s var(--ease);
+}
+.nav__right a:hover{color:var(--ink)}
+.nav__right a:hover::after{transform:scaleX(1)}
+
+/* ---------- hero ---------- */
+.hero{
+  background:
+    radial-gradient(1000px 520px at 50% -10%,#fff 0%,#fdfdfc 45%,#f5f5f3 100%);
+  display:flex;flex-direction:column;
+  min-height:min(88vh,820px);
+}
+.hero__body{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:clamp(44px,7vh,84px) clamp(20px,4vw,40px) clamp(40px,6vh,68px);
+}
+
+/* identity: monogram + name pill (no photo, as requested) */
+.idcard{display:flex;align-items:center;margin-bottom:clamp(20px,3vh,28px)}
+.avatar{
+  width:58px;height:58px;border-radius:50%;
+  display:grid;place-items:center;flex:none;
+  background:linear-gradient(150deg,#fbfbf9 0%,#e4e4e0 55%,#d2d2ce 100%);
+  border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 10px 24px -12px rgba(12,12,12,.45);
+  font-size:17px;font-weight:600;letter-spacing:.06em;color:#3b3b39;
+}
+.namepill{
+  display:inline-flex;align-items:center;gap:7px;
+  margin-left:-10px;
+  padding:7px 13px 7px 11px;border-radius:999px;
+  background:#fff;border:1px solid rgba(12,12,12,.06);
+  box-shadow:0 6px 18px -10px rgba(12,12,12,.4);
+  font-size:12px;font-weight:500;color:#2c2c2a;white-space:nowrap;
+}
+.namepill .dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.12)}
+.namepill .wave{font-size:11px;transform:translateY(-.5px)}
+
+.hero__title{
+  font-size:clamp(34px,6.4vw,68px);
+  line-height:1.05;
+  letter-spacing:-.038em;
+  font-weight:500;
+  max-width:15ch;
+  margin-bottom:clamp(14px,2.2vh,20px);
+}
+.line{display:block;overflow:hidden;padding-bottom:.16em;margin-bottom:-.16em}
+.w{display:inline-block;will-change:transform}
+.js .hero__title .w{opacity:0;transform:translateY(118%)}
+.js .hero.is-ready .w{
+  opacity:1;transform:none;
+  transition:transform .95s var(--ease),opacity .8s ease;
+}
+.hero__sub{
+  max-width:44ch;font-size:14.5px;line-height:1.65;color:var(--muted);
+  margin-bottom:clamp(24px,3.4vh,32px);text-wrap:pretty;
+}
+.js [data-rise]{opacity:0;transform:translateY(14px)}
+.js .is-ready [data-rise]{
+  opacity:1;transform:none;
+  transition:opacity .9s var(--ease),transform .9s var(--ease);
+  transition-delay:calc(var(--d,0ms) + 380ms);
+}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 22px;border-radius:999px;
+  font-size:13.5px;font-weight:500;letter-spacing:-.005em;
+  cursor:pointer;border:1px solid transparent;
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease),background .3s ease,border-color .3s ease;
+}
+.btn svg{width:15px;height:15px;transition:transform .45s var(--ease)}
+.btn--dark{background:var(--ink);color:#fff;box-shadow:0 10px 22px -12px rgba(12,12,12,.6)}
+.btn--dark:hover{transform:translateY(-2px);box-shadow:0 16px 28px -14px rgba(12,12,12,.65)}
+.btn--dark:hover svg{transform:translateX(3px)}
+.btn--dark:active{transform:translateY(0) scale(.99)}
+.btn--light{
+  background:#fff;color:var(--ink);
+  border-color:rgba(12,12,12,.1);
+  box-shadow:0 1px 2px rgba(12,12,12,.05);
+}
+.btn--light:hover{transform:translateY(-2px);border-color:rgba(12,12,12,.22);box-shadow:0 12px 24px -16px rgba(12,12,12,.5)}
+
+/* ---------- tools strip ---------- */
+.strip{
+  border-top:1px solid var(--line);
+  padding:clamp(22px,3vw,30px) clamp(20px,4vw,52px) clamp(26px,3.4vw,34px);
+  text-align:center;
+}
+.strip__label{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:18px;
+}
+.logos{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:clamp(22px,4.4vw,56px);
+}
+.logos li{
+  font-size:15px;font-weight:600;letter-spacing:-.02em;color:#6f6f6c;
+  transition:color .45s ease,transform .45s var(--ease);
+}
+.logos li:hover{color:var(--ink);transform:translateY(-1px)}
+.logos .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;letter-spacing:0}
+
+/* ---------- services ---------- */
+.services{padding:clamp(56px,8vw,92px) clamp(22px,5vw,60px) clamp(48px,6vw,76px)}
+.services h2{
+  font-size:clamp(25px,3.4vw,38px);
+  line-height:1.2;letter-spacing:-.032em;font-weight:500;
+  text-align:center;max-width:30ch;margin:0 auto;
+}
+.rule{position:relative;display:flex;justify-content:center;margin:clamp(30px,4vw,44px) 0 clamp(34px,4.4vw,48px)}
+.rule::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--line)}
+.rule span{
+  position:relative;z-index:1;background:#fff;
+  padding:6px 13px;border:1px solid var(--line);border-radius:999px;
+  font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#5c5c59;
+}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(24px,3.4vw,44px)}
+.item__icon{
+  width:34px;height:34px;border-radius:10px;margin-bottom:13px;
+  display:grid;place-items:center;
+  background:#fbfbfa;border:1px solid var(--line);color:#3a3a38;
+}
+.item__icon svg{width:15px;height:15px}
+.item h3{font-size:13.5px;font-weight:600;letter-spacing:-.01em;margin-bottom:6px}
+.item p{font-size:12.5px;line-height:1.62;color:#6f6f6c;text-wrap:pretty}
+
+/* ---------- CTA ---------- */
+.cta{
+  padding:clamp(56px,8vw,88px) clamp(22px,5vw,60px) 0;
+  text-align:center;
+  background:radial-gradient(900px 420px at 50% 0%,#fff 0%,#fdfdfb 50%,#f6f6f4 100%);
+}
+.cta__badge{
+  width:46px;height:46px;border-radius:50%;margin:0 auto 20px;
+  display:grid;place-items:center;
+  background:linear-gradient(150deg,#fbfbf9,#e6e6e2);
+  border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 8px 20px -12px rgba(12,12,12,.45);
+  font-size:13px;font-weight:600;letter-spacing:.06em;color:#3b3b39;
+}
+.cta h2{
+  font-size:clamp(30px,4.6vw,50px);line-height:1.1;
+  letter-spacing:-.038em;font-weight:500;max-width:16ch;margin:0 auto 12px;
+}
+.cta p{font-size:13.5px;color:var(--muted);max-width:38ch;margin:0 auto}
+.cta__actions{display:flex;justify-content:center;gap:9px;margin-top:clamp(22px,3vw,28px)}
+footer{
+  margin-top:clamp(48px,7vw,76px);
+  border-top:1px solid var(--line);
+  padding:20px 0 22px;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  font-size:11.5px;color:#6f6f6c;
+}
+footer nav{display:flex;gap:16px}
+footer a{transition:color .3s ease}
+footer a:hover{color:var(--ink)}
+.to-top{display:inline-flex;align-items:center;gap:5px;background:none;border:0;cursor:pointer;color:inherit;padding:4px}
+.to-top svg{width:11px;height:11px;transition:transform .4s var(--ease)}
+.to-top:hover{color:var(--ink)}
+.to-top:hover svg{transform:translateY(-2px)}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr);gap:30px 26px}
+  .hero{min-height:auto}
+  .hero__body{padding-top:clamp(52px,9vh,84px);padding-bottom:clamp(44px,7vh,64px)}
+}
+@media (max-width:680px){
+  .nav__right{display:none}
+  .nav{padding-top:20px}
+  .mail{font-size:12px}
+  .hero__title{max-width:100%}
+  .hero__sub{font-size:14px}
+  footer{flex-direction:column;justify-content:center;gap:12px;text-align:center}
+}
+@media (max-width:560px){
+  .hero__title{font-size:clamp(27px,7.9vw,33px)}
+  .logos{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 8px}
+  .logos li{font-size:13px;text-align:center}
+}
+@media (max-width:520px){
+  :root{--radius:26px}
+  .grid{grid-template-columns:1fr;gap:26px}
+  .item{display:grid;grid-template-columns:auto 1fr;column-gap:12px;align-items:start}
+  .item__icon{grid-row:span 2;margin-bottom:0}
+  .item h3{margin-bottom:3px}
+  .cta__actions{flex-direction:column}
+  .cta__actions .btn{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+  .js .hero__title .w,.js [data-rise]{opacity:1;transform:none}
+  .progress{display:none}
+}
+</style>
+</head>
+<body id="top">
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<main class="shell">
+
+  <!-- ============ HERO ============ -->
+  <section class="card hero" id="home">
+    <header class="nav">
+      <div class="nav__left">
+        <a class="mail" href="mailto:hello@paulablaza.com">hello@paulablaza.com</a>
+        <button class="chip" type="button" id="copyBtn" aria-label="Copy email address">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+            <rect x="5.5" y="5.5" width="8" height="8" rx="2"/><path d="M10.5 3.5H4a1.5 1.5 0 0 0-1.5 1.5v6.5"/>
+          </svg>
+          <span id="copyLabel">Copy</span>
+        </button>
+        <a class="chip" href="#" aria-label="Download CV — coming soon">CV</a>
+      </div>
+      <nav class="nav__right" aria-label="Social links">
+        <a href="#" aria-label="LinkedIn">LinkedIn</a>
+        <a href="#" aria-label="GitHub">GitHub</a>
+        <a href="#" aria-label="Instagram">Instagram</a>
+      </nav>
+    </header>
+
+    <div class="hero__body">
+      <div class="idcard" data-rise style="--d:0ms">
+        <div class="avatar" aria-hidden="true">PA</div>
+        <div class="namepill">
+          <span class="dot" aria-hidden="true"></span>
+          Paul Ablaza <span class="wave" aria-hidden="true">👋</span>
+        </div>
+      </div>
+
+      <h1 class="hero__title" aria-label="Building digital things, learning in public.">
+        <span class="line"><span class="w">Building</span> <span class="w">digital</span> <span class="w">things,</span></span>
+        <span class="line"><span class="w">learning</span> <span class="w">in</span> <span class="w">public.</span></span>
+      </h1>
+
+      <p class="hero__sub" data-rise style="--d:120ms">
+        Student based in the Philippines. I design and build small web projects — then rebuild them
+        until they feel simple.
+      </p>
+
+      <a class="btn btn--dark" href="#services" data-rise style="--d:200ms">
+        Meet Paul
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M2.5 8h11M9 3.5 13.5 8 9 12.5"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="strip">
+      <p class="strip__label">Tools I work in</p>
+      <ul class="logos">
+        <li>Figma</li>
+        <li>Framer</li>
+        <li class="mono">VS&nbsp;Code</li>
+        <li>GitHub</li>
+        <li>Notion</li>
+        <li>Obsidian</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section class="card services" id="services">
+    <h2 data-reveal>Open to internships, freelance work, and anything that teaches me something.</h2>
+
+    <div class="rule" data-reveal style="--d:80ms"><span>Services</span></div>
+
+    <div class="grid">
+      <article class="item" data-reveal style="--d:0ms">
+        <div class="item__icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3">
+            <rect x="2" y="2" width="12" height="12" rx="2.5"/><path d="M2 6h12"/><path d="M6 6v8"/>
+          </svg>
+        </div>
+        <h3>UX &amp; UI</h3>
+        <p>Interfaces that are clear, quiet and easy to use — from first sketch to final screen.</p>
+      </article>
+
+      <article class="item" data-reveal style="--d:70ms">
+        <div class="item__icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3">
+            <rect x="4.5" y="1.5" width="7" height="13" rx="2"/><path d="M7 12.5h2"/>
+          </svg>
+        </div>
+        <h3>Web &amp; Mobile</h3>
+        <p>Turning rough ideas into responsive screens that work on any size of glass.</p>
+      </article>
+
+      <article class="item" data-reveal style="--d:140ms">
+        <div class="item__icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3">
+            <path d="M8 1.8 9.5 6l4.2 1.5L9.5 9 8 13.2 6.5 9 2.3 7.5 6.5 6z"/>
+          </svg>
+        </div>
+        <h3>Design &amp; Creative</h3>
+        <p>Type, layout and small visual details that make a page feel finished.</p>
+      </article>
+
+      <article class="item" data-reveal style="--d:210ms">
+        <div class="item__icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3">
+            <path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5"/>
+          </svg>
+        </div>
+        <h3>Development</h3>
+        <p>Shipping it: clean HTML, CSS and just enough JavaScript to make it move.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="card cta" id="contact">
+    <div class="cta__badge" aria-hidden="true">PA</div>
+    <h2 data-reveal>Tell me about your<br>next project.</h2>
+    <p data-reveal style="--d:80ms">The fastest way to reach me is email. I usually reply within a day.</p>
+
+    <div class="cta__actions">
+      <a class="btn btn--dark" href="mailto:hello@paulablaza.com" data-reveal style="--d:140ms">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+          <rect x="1.5" y="3.5" width="13" height="9" rx="2"/><path d="m2.2 4.6 5.1 3.8a1.2 1.2 0 0 0 1.4 0l5.1-3.8"/>
+        </svg>
+        Email me
+      </a>
+      <a class="btn btn--light" href="https://wa.me/63" target="_blank" rel="noopener" data-reveal style="--d:200ms">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+          <path d="M14 7.7a6 6 0 0 1-8.9 5.3L2 14l1.1-3a6 6 0 1 1 10.9-3.3Z"/>
+        </svg>
+        WhatsApp
+      </a>
+    </div>
+
+    <footer>
+      <span>© 2026 Paul Ablaza</span>
+      <nav aria-label="Footer links">
+        <a href="#">LinkedIn</a>
+        <a href="#">GitHub</a>
+        <a href="#">Instagram</a>
+      </nav>
+      <button class="to-top" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        Back to top
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <path d="M8 13.5v-11M3.5 7 8 2.5 12.5 7"/>
+        </svg>
+      </button>
+    </footer>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const EMAIL = 'hello@paulablaza.com';
+
+  /* word-by-word hero reveal */
+  const words = document.querySelectorAll('.hero__title .w');
+  words.forEach(function (w, i) {
+    w.style.transitionDelay = (140 + i * 60) + 'ms';
+  });
+  requestAnimationFrame(function () {
+    document.querySelector('.hero').classList.add('is-ready');
+  });
+
+  /* reveal on scroll */
+  const revealables = document.querySelectorAll('[data-reveal]');
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+    revealables.forEach(function (el) { io.observe(el); });
+  } else {
+    revealables.forEach(function (el) { el.classList.add('is-in'); });
+  }
+
+  /* scroll progress */
+  const bar = document.getElementById('progress');
+  let ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* copy email */
+  const btn = document.getElementById('copyBtn');
+  const label = document.getElementById('copyLabel');
+  let timer;
+  btn.addEventListener('click', function () {
+    const done = function () {
+      btn.classList.add('is-copied');
+      label.textContent = 'Copied ✓';
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        btn.classList.remove('is-copied');
+        label.textContent = 'Copy';
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(EMAIL).then(done, fallback);
+    } else {
+      fallback();
+    }
+    function fallback() {
+      const t = document.createElement('textarea');
+      t.value = EMAIL;
+      t.style.position = 'fixed';
+      t.style.opacity = '0';
+      document.body.appendChild(t);
+      t.select();
+      try { document.execCommand('copy'); done(); } catch (e) { label.textContent = 'Copy failed'; }
+      t.remove();
+    }
+  });
+})();
+</script>
+</body>
+</html>
